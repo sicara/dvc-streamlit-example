@@ -46,3 +46,34 @@ stages:
     - path: logs/split_dataset.out
       md5: 6fa4014992ad6a7d326be58d4a2563b4
       size: 2224
+  train:
+    cmd: python scripts/train.py &> logs/train.out
+    deps:
+    - path: ./data/dataset/train
+      md5: 0a1a83aa537b94b2b07eb1503701eca7.dir
+      size: 45613376
+      nfiles: 2000
+    - path: ./data/dataset/val
+      md5: d34d9a2762c720f7415020cd9ddabb1e.dir
+      size: 16126886
+      nfiles: 695
+    - path: scripts/train.py
+      md5: db2b9a58cb8f07e588548c37525737e0
+      size: 2581
+    params:
+      params.yaml:
+        train:
+          batch_size: 32
+          img_size:
+          - 160
+          - 160
+          learning_rate: 0.0001
+          subdir: train
+    outs:
+    - path: ./data/train/model
+      md5: 87cdfeccb6b6400ecf86225badcc33f3.dir
+      size: 20669958
+      nfiles: 3
+    - path: logs/train.out
+      md5: d70b8a1149430a1f73b4b65ffd25ff8f
+      size: 205985

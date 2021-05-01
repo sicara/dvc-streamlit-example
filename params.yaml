@@ -1,5 +1,6 @@
+root_dir: ./data
+
 data:
-  root_dir: ./data
   download:
     subdir: raw
     url: https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
@@ -9,3 +10,9 @@ data:
     val_test_split:
       val: 0.7
       test: 0.3
+
+train:
+  batch_size: 32
+  img_size: [160, 160]
+  learning_rate: 0.0001
+  subdir: train

@@ -2,23 +2,35 @@ stages:
   download_dataset:
     cmd: (
         wget ${data.download.url} -O ${data.download.zip_file} &&
-        unzip ${data.download.zip_file} -d ${data.root_dir}/${data.download.subdir} &&
+        unzip ${data.download.zip_file} -d ${root_dir}/${data.download.subdir} &&
         rm ${data.download.zip_file}
       ) &> logs/download_dataset.out
     outs:
-      - ${data.root_dir}/${data.download.subdir}
+      - ${root_dir}/${data.download.subdir}
       - logs/download_dataset.out
 
   split_dataset:
     cmd: python scripts/split_dataset.py &> logs/split_dataset.out
     deps:
       - scripts/split_dataset.py
-      - ${data.root_dir}/${data.download.subdir}
+      - ${root_dir}/${data.download.subdir}
     params:
       - data.dataset.val_test_split
     outs:
-      - ${data.root_dir}/${data.dataset.subdir}/dataset.csv
-      - ${data.root_dir}/${data.dataset.subdir}/train
-      - ${data.root_dir}/${data.dataset.subdir}/val
-      - ${data.root_dir}/${data.dataset.subdir}/test
+      - ${root_dir}/${data.dataset.subdir}/dataset.csv
+      - ${root_dir}/${data.dataset.subdir}/train
+      - ${root_dir}/${data.dataset.subdir}/val
+      - ${root_dir}/${data.dataset.subdir}/test
       - logs/split_dataset.out
+
+  train:
+    cmd: python scripts/train.py &> logs/train.out
+    deps:
+      - scripts/train.py
+      - ${root_dir}/${data.dataset.subdir}/train
+      - ${root_dir}/${data.dataset.subdir}/val
+    params:
+      - train
+    outs:
+      - ${root_dir}/${train.subdir}/model
+      - logs/train.out

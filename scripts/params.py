@@ -11,7 +11,16 @@ with open(PARAMETERS_FILE) as file:
     params = yaml.safe_load(file)
 
 
-DATA_ROOT_DIR = Path(params["data"]["root_dir"])
-RAW_DATASET_DIR = DATA_ROOT_DIR / params["data"]["download"]["subdir"]
-DATASET_DIR = DATA_ROOT_DIR / params["data"]["dataset"]["subdir"]
+ROOT_DIR = Path(params["root_dir"])
+
+# Dataset parameters
+RAW_DATASET_DIR = ROOT_DIR / params["data"]["download"]["subdir"]
+DATASET_DIR = ROOT_DIR / params["data"]["dataset"]["subdir"]
 DATASET_VAL_TEST_SPLIT = params["data"]["dataset"]["val_test_split"]
+
+
+# Train parameters
+BATCH_SIZE = params["train"]["batch_size"]
+IMG_SIZE = tuple(params["train"]["img_size"])
+LEARNING_RATE = params["train"]["learning_rate"]
+TRAIN_DIR = ROOT_DIR / params["train"]["subdir"]
