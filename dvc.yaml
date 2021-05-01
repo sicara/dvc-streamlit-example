@@ -8,3 +8,17 @@ stages:
     outs:
       - ${data.root_dir}/${data.download.subdir}
       - logs/download_dataset.out
+
+  split_dataset:
+    cmd: python scripts/split_dataset.py &> logs/split_dataset.out
+    deps:
+      - scripts/split_dataset.py
+      - ${data.root_dir}/${data.download.subdir}
+    params:
+      - data.dataset.val_test_split
+    outs:
+      - ${data.root_dir}/${data.dataset.subdir}/dataset.csv
+      - ${data.root_dir}/${data.dataset.subdir}/train
+      - ${data.root_dir}/${data.dataset.subdir}/val
+      - ${data.root_dir}/${data.dataset.subdir}/test
+      - logs/split_dataset.out

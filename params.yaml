@@ -4,3 +4,8 @@ data:
     subdir: raw
     url: https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
     zip_file: cats_and_dogs_filtered.zip
+  dataset:
+    subdir: dataset
+    val_test_split:
+      val: 0.7
+      test: 0.3

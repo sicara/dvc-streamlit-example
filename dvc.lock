@@ -12,3 +12,37 @@ stages:
     - path: logs/download_dataset.out
       md5: f211c659367eb1b32f30b385df5260de
       size: 325690
+  split_dataset:
+    cmd: python scripts/split_dataset.py &> logs/split_dataset.out
+    deps:
+    - path: ./data/raw
+      md5: 174fe7fcb400140a007ac05c36b5bfd4.dir
+      size: 68556316
+      nfiles: 3001
+    - path: scripts/split_dataset.py
+      md5: e99a47b198dee35710b7c745b60e928c
+      size: 1277
+    params:
+      params.yaml:
+        data.dataset.val_test_split:
+          val: 0.7
+          test: 0.3
+    outs:
+    - path: ./data/dataset/dataset.csv
+      md5: 2f6641598b7fc6c8d1dd031a6d595161
+      size: 68108
+    - path: ./data/dataset/test
+      md5: 326353ae0eed20bee508f30419a0ec25.dir
+      size: 6815914
+      nfiles: 305
+    - path: ./data/dataset/train
+      md5: 0a1a83aa537b94b2b07eb1503701eca7.dir
+      size: 45613376
+      nfiles: 2000
+    - path: ./data/dataset/val
+      md5: d34d9a2762c720f7415020cd9ddabb1e.dir
+      size: 16126886
+      nfiles: 695
+    - path: logs/split_dataset.out
+      md5: 6fa4014992ad6a7d326be58d4a2563b4
+      size: 2224
