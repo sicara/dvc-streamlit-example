@@ -1,0 +1,10 @@
+stages:
+  download_dataset:
+    cmd: (
+        wget ${data.download.url} -O ${data.download.zip_file} &&
+        unzip ${data.download.zip_file} -d ${data.root_dir}/${data.download.subdir} &&
+        rm ${data.download.zip_file}
+      ) &> logs/download_dataset.out
+    outs:
+      - ${data.root_dir}/${data.download.subdir}
+      - logs/download_dataset.out

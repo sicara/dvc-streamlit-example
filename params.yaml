@@ -1,0 +1,6 @@
+data:
+  root_dir: ./data
+  download:
+    subdir: raw
+    url: https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
+    zip_file: cats_and_dogs_filtered.zip

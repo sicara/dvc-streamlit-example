@@ -1,0 +1,14 @@
+schema: '2.0'
+stages:
+  download_dataset:
+    cmd: ( wget https://storage.googleapis.com/mledu-datasets/cats_and_dogs_filtered.zip
+      -O cats_and_dogs_filtered.zip && unzip cats_and_dogs_filtered.zip -d ./data/raw
+      && rm cats_and_dogs_filtered.zip ) &> logs/download_dataset.out
+    outs:
+    - path: ./data/raw
+      md5: 174fe7fcb400140a007ac05c36b5bfd4.dir
+      size: 68556316
+      nfiles: 3001
+    - path: logs/download_dataset.out
+      md5: f211c659367eb1b32f30b385df5260de
+      size: 325690
