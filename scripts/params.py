@@ -24,3 +24,6 @@ BATCH_SIZE = params["train"]["batch_size"]
 IMG_SIZE = tuple(params["train"]["img_size"])
 LEARNING_RATE = params["train"]["learning_rate"]
 TRAIN_DIR = ROOT_DIR / params["train"]["subdir"]
+EPOCHS_FROZEN = params["train"]["epochs"]["frozen"]
+EPOCHS_UNFROZEN = params["train"]["epochs"]["unfrozen"]
+FINE_TUNE_AT = params["train"]["fine_tune_at"]

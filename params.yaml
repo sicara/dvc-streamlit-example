@@ -16,3 +16,7 @@ train:
   img_size: [160, 160]
   learning_rate: 0.0001
   subdir: train
+  epochs:
+    frozen: 10
+    unfrozen: 10
+  fine_tune_at: 100

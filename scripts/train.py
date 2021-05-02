@@ -3,8 +3,16 @@ import dvclive
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image_dataset_from_directory
 
-from scripts.params import DATASET_DIR, BATCH_SIZE, IMG_SIZE, LEARNING_RATE, TRAIN_DIR
-
+from scripts.params import (
+    BATCH_SIZE,
+    DATASET_DIR,
+    EPOCHS_FROZEN,
+    EPOCHS_UNFROZEN,
+    FINE_TUNE_AT,
+    IMG_SIZE,
+    LEARNING_RATE,
+    TRAIN_DIR,
+)
 
 #%% Load dataset
 train_dataset = image_dataset_from_directory(
@@ -74,7 +82,7 @@ model.summary()
 
 history = model.fit(
     train_dataset,
-    epochs=10,
+    epochs=EPOCHS_FROZEN,
     validation_data=validation_dataset,
     callbacks=callbacks,
 )
@@ -86,11 +94,8 @@ base_model.trainable = True
 # Let's take a look to see how many layers are in the base model
 print("Number of layers in the base model: ", len(base_model.layers))
 
-# Fine-tune from this layer onwards
-fine_tune_at = 100
-
-# Freeze all the layers before the `fine_tune_at` layer
-for layer in base_model.layers[:fine_tune_at]:
+# Freeze all the layers before the `FINE_TUNE_AT` layer
+for layer in base_model.layers[:FINE_TUNE_AT]:
     layer.trainable = False
 
 model.compile(
@@ -102,8 +107,8 @@ model.summary()
 
 history_fine = model.fit(
     train_dataset,
-    epochs=20,
-    initial_epoch=10,
+    epochs=EPOCHS_FROZEN + EPOCHS_UNFROZEN,
+    initial_epoch=EPOCHS_FROZEN,
     validation_data=validation_dataset,
     callbacks=callbacks,
 )
