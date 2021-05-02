@@ -34,3 +34,7 @@ stages:
     outs:
       - ${root_dir}/${train.subdir}/model
       - logs/train.out
+    live:
+      ${root_dir}/${train.subdir}/training_metrics:
+        summary: true
+        html: true

@@ -58,8 +58,8 @@ stages:
       size: 16126886
       nfiles: 695
     - path: scripts/train.py
-      md5: db2b9a58cb8f07e588548c37525737e0
-      size: 2581
+      md5: 7bf4aef652d57de83cbe6bd74a0b5dc9
+      size: 3008
     params:
       params.yaml:
         train:
@@ -71,9 +71,13 @@ stages:
           subdir: train
     outs:
     - path: ./data/train/model
-      md5: 87cdfeccb6b6400ecf86225badcc33f3.dir
+      md5: 710e349b7faa0b6802638cc8aee3176a.dir
       size: 20669958
       nfiles: 3
+    - path: ./data/train/training_metrics
+      md5: 9269e3d4e0df7fa2f27c44d2b244767f.dir
+      size: 3044
+      nfiles: 4
     - path: logs/train.out
-      md5: d70b8a1149430a1f73b4b65ffd25ff8f
-      size: 205985
+      md5: d6ceb42e8335c48e3eee684eb4a4f175
+      size: 204832

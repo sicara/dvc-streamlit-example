@@ -32,6 +32,7 @@ distro==1.5.0
 dpath==2.0.1
 dulwich==0.20.21
 dvc==2.0.18
+dvclive==0.0.2
 entrypoints==0.3
 flatbuffers==1.12
 flatten-dict==0.3.0

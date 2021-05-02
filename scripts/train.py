@@ -1,4 +1,5 @@
 # Original code from: https://www.tensorflow.org/tutorials/images/transfer_learning
+import dvclive
 import tensorflow as tf
 from tensorflow.keras.preprocessing import image_dataset_from_directory
 
@@ -48,6 +49,19 @@ outputs = tf.keras.layers.Dense(1)(x)
 model = tf.keras.Model(inputs, outputs)
 
 
+#%% Define dvclive callback
+# See https://dvc.org/doc/dvclive/dvclive-with-dvc
+class MetricsCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch: int, logs: dict = None):
+        logs = logs or {}
+        for metric, value in logs.items():
+            dvclive.log(metric, value)
+        dvclive.next_step()
+
+
+callbacks = [MetricsCallback()]
+
+
 #%% Freeze the base model and train 10 epochs
 base_model.trainable = False
 
@@ -62,6 +76,7 @@ history = model.fit(
     train_dataset,
     epochs=10,
     validation_data=validation_dataset,
+    callbacks=callbacks,
 )
 
 
@@ -90,6 +105,7 @@ history_fine = model.fit(
     epochs=20,
     initial_epoch=10,
     validation_data=validation_dataset,
+    callbacks=callbacks,
 )
 
 
