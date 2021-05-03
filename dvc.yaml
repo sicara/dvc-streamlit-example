@@ -38,3 +38,21 @@ stages:
       ${root_dir}/${train.subdir}/training_metrics:
         summary: true
         html: true
+
+  evaluate:
+    cmd: python scripts/evaluate.py &> logs/evaluate.out
+    deps:
+      - scripts/evaluate.py
+      - ${root_dir}/${data.dataset.subdir}/test
+      - ${root_dir}/${train.subdir}/model
+    outs:
+      - logs/evaluate.out
+    metrics:
+      - ${root_dir}/${evaluate.subdir}/metrics.json:
+          cache: false
+    plots:
+      - ${root_dir}/${evaluate.subdir}/predictions.csv:
+          template: confusion
+          x: true_label
+          y: predicted_label
+          title: Confusion Matrix

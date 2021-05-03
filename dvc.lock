@@ -85,3 +85,27 @@ stages:
     - path: logs/train.out
       md5: d043142ef453bf7bc0876f2b7f83dc96
       size: 205489
+  evaluate:
+    cmd: python scripts/evaluate.py &> logs/evaluate.out
+    deps:
+    - path: ./data/dataset/test
+      md5: 326353ae0eed20bee508f30419a0ec25.dir
+      size: 6815914
+      nfiles: 305
+    - path: ./data/train/model
+      md5: 82882ce07aabe2ac35643926b0b6d8be.dir
+      size: 20669958
+      nfiles: 3
+    - path: scripts/evaluate.py
+      md5: aada14c8861cb28746abb5aa78e9c4c3
+      size: 1377
+    outs:
+    - path: ./data/evaluation/metrics.json
+      md5: 5ba98eca1d691aa800be75ffd1aa7ea0
+      size: 55
+    - path: ./data/evaluation/predictions.csv
+      md5: bc719f5920d5ae7f1b188f85ea757b96
+      size: 21632
+    - path: logs/evaluate.out
+      md5: 65a3dcf9a5d56faa40bd4b6c0eba3c7c
+      size: 712

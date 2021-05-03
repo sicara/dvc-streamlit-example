@@ -27,3 +27,7 @@ TRAIN_DIR = ROOT_DIR / params["train"]["subdir"]
 EPOCHS_FROZEN = params["train"]["epochs"]["frozen"]
 EPOCHS_UNFROZEN = params["train"]["epochs"]["unfrozen"]
 FINE_TUNE_AT = params["train"]["fine_tune_at"]
+
+
+# Evaluation parameters
+EVALUATION_DIR = ROOT_DIR / params["evaluate"]["subdir"]

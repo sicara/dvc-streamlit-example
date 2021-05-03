@@ -20,3 +20,6 @@ train:
     frozen: 10
     unfrozen: 10
   fine_tune_at: 100
+
+evaluate:
+  subdir: evaluation
