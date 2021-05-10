@@ -21,5 +21,11 @@ train:
     unfrozen: 10
   fine_tune_at: 100
 
+model:
+  # Choose among available models in tf.keras.applications
+  # See https://www.tensorflow.org/api_docs/python/tf/keras/applications
+  backbone: tensorflow.keras.applications.MobileNetV2
+  preprocess_input: tensorflow.keras.applications.mobilenet_v2.preprocess_input
+
 evaluate:
   subdir: evaluation

@@ -31,6 +31,7 @@ stages:
       - ${root_dir}/${data.dataset.subdir}/val
     params:
       - train
+      - model
     outs:
       - ${root_dir}/${train.subdir}/model
       - logs/train.out

@@ -1,4 +1,5 @@
 from pathlib import Path
+from pydoc import locate
 
 import yaml
 
@@ -27,6 +28,11 @@ TRAIN_DIR = ROOT_DIR / params["train"]["subdir"]
 EPOCHS_FROZEN = params["train"]["epochs"]["frozen"]
 EPOCHS_UNFROZEN = params["train"]["epochs"]["unfrozen"]
 FINE_TUNE_AT = params["train"]["fine_tune_at"]
+
+
+# Model parameters
+BACKBONE = locate(params["model"]["backbone"])
+PREPROCESS_INPUT = locate(params["model"]["preprocess_input"])
 
 
 # Evaluation parameters
