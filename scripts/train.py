@@ -1,6 +1,7 @@
 # Original code from: https://www.tensorflow.org/tutorials/images/transfer_learning
 import dvclive
 import tensorflow as tf
+from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.preprocessing import image_dataset_from_directory
 
 from scripts.params import (
@@ -64,7 +65,10 @@ class MetricsCallback(tf.keras.callbacks.Callback):
         dvclive.next_step()
 
 
-callbacks = [MetricsCallback()]
+callbacks = [
+    MetricsCallback(),
+    ModelCheckpoint(str(TRAIN_DIR / "best_weights.h5"), save_best_only=True),
+]
 
 
 #%% Freeze the base model and train 10 epochs
@@ -111,5 +115,6 @@ history_fine = model.fit(
 )
 
 
-#%%
+#%% Load best weights and save model
+model.load_weights(str(TRAIN_DIR / "best_weights.h5"))
 tf.saved_model.save(model, str(TRAIN_DIR / "model"))

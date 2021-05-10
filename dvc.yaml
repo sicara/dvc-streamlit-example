@@ -33,6 +33,7 @@ stages:
       - train
       - model
     outs:
+      - ${root_dir}/${train.subdir}/best_weights.h5
       - ${root_dir}/${train.subdir}/model
       - logs/train.out
     live:
