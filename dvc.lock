@@ -58,10 +58,13 @@ stages:
       size: 16126886
       nfiles: 695
     - path: scripts/train.py
-      md5: 9db9df148e8b04efd14d0e19ee79a24e
-      size: 3085
+      md5: a6edfb77adf3b631391890188d246d2c
+      size: 3264
     params:
       params.yaml:
+        model:
+          backbone: tensorflow.keras.applications.MobileNetV2
+          preprocess_input: tensorflow.keras.applications.mobilenet_v2.preprocess_input
         train:
           batch_size: 32
           img_size:
@@ -74,17 +77,20 @@ stages:
             unfrozen: 10
           fine_tune_at: 100
     outs:
+    - path: ./data/train/best_weights.h5
+      md5: 22b4eefd467fe01b15f401eb423f1289
+      size: 16911920
     - path: ./data/train/model
-      md5: 82882ce07aabe2ac35643926b0b6d8be.dir
-      size: 20669958
+      md5: d62aead6e26a238d228812998530c388.dir
+      size: 21086764
       nfiles: 3
     - path: ./data/train/training_metrics
-      md5: 65babd74171556f7241803f6b6cc10f3.dir
-      size: 3039
+      md5: c25f9bd2dfb5226ffcc45d71d4d9816c.dir
+      size: 3052
       nfiles: 4
     - path: logs/train.out
-      md5: d043142ef453bf7bc0876f2b7f83dc96
-      size: 205489
+      md5: 46c8b7c2efda0bc0dbaf914c24839063
+      size: 220914
   evaluate:
     cmd: python scripts/evaluate.py &> logs/evaluate.out
     deps:
@@ -93,19 +99,19 @@ stages:
       size: 6815914
       nfiles: 305
     - path: ./data/train/model
-      md5: 82882ce07aabe2ac35643926b0b6d8be.dir
-      size: 20669958
+      md5: d62aead6e26a238d228812998530c388.dir
+      size: 21086764
       nfiles: 3
     - path: scripts/evaluate.py
       md5: aada14c8861cb28746abb5aa78e9c4c3
       size: 1377
     outs:
     - path: ./data/evaluation/metrics.json
-      md5: 5ba98eca1d691aa800be75ffd1aa7ea0
-      size: 55
+      md5: 8bf2c04058d4b4e860a8f80174cda13e
+      size: 56
     - path: ./data/evaluation/predictions.csv
-      md5: bc719f5920d5ae7f1b188f85ea757b96
-      size: 21632
+      md5: 8d62470843922337067f7901a925cd93
+      size: 21652
     - path: logs/evaluate.out
-      md5: 65a3dcf9a5d56faa40bd4b6c0eba3c7c
-      size: 712
+      md5: e5168eff8cf83eee2debfe82025865bf
+      size: 4839
