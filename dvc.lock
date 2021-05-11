@@ -63,8 +63,8 @@ stages:
     params:
       params.yaml:
         model:
-          backbone: tensorflow.keras.applications.MobileNetV2
-          preprocess_input: tensorflow.keras.applications.mobilenet_v2.preprocess_input
+          backbone: tensorflow.keras.applications.ResNet50
+          preprocess_input: tensorflow.keras.applications.resnet50.preprocess_input
         train:
           batch_size: 32
           img_size:
@@ -74,23 +74,23 @@ stages:
           subdir: train
           epochs:
             frozen: 10
-            unfrozen: 10
+            unfrozen: 15
           fine_tune_at: 100
     outs:
     - path: ./data/train/best_weights.h5
-      md5: 22b4eefd467fe01b15f401eb423f1289
-      size: 16911920
+      md5: d8adc1a3678ae740ac214f352d48a05e
+      size: 172679472
     - path: ./data/train/model
-      md5: d62aead6e26a238d228812998530c388.dir
-      size: 21086764
+      md5: f620686421a581af909b576489fe2abb.dir
+      size: 177275013
       nfiles: 3
     - path: ./data/train/training_metrics
-      md5: c25f9bd2dfb5226ffcc45d71d4d9816c.dir
-      size: 3052
+      md5: d74d74a16fe3c4a5424441503827213e.dir
+      size: 3810
       nfiles: 4
     - path: logs/train.out
-      md5: 46c8b7c2efda0bc0dbaf914c24839063
-      size: 220914
+      md5: 37770d8d49a959d4343bbf82906848da
+      size: 276679
   evaluate:
     cmd: python scripts/evaluate.py &> logs/evaluate.out
     deps:
@@ -99,19 +99,19 @@ stages:
       size: 6815914
       nfiles: 305
     - path: ./data/train/model
-      md5: d62aead6e26a238d228812998530c388.dir
-      size: 21086764
+      md5: f620686421a581af909b576489fe2abb.dir
+      size: 177275013
       nfiles: 3
     - path: scripts/evaluate.py
       md5: aada14c8861cb28746abb5aa78e9c4c3
       size: 1377
     outs:
     - path: ./data/evaluation/metrics.json
-      md5: 8bf2c04058d4b4e860a8f80174cda13e
-      size: 56
+      md5: 5ba98eca1d691aa800be75ffd1aa7ea0
+      size: 55
     - path: ./data/evaluation/predictions.csv
-      md5: 8d62470843922337067f7901a925cd93
-      size: 21652
+      md5: e140a05dde76c4c47af03c63103762b5
+      size: 21512
     - path: logs/evaluate.out
-      md5: e5168eff8cf83eee2debfe82025865bf
+      md5: ec5490a55b5a6b528dccfbd1b2eb81f4
       size: 4839
