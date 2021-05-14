@@ -44,7 +44,7 @@ data_augmentation = tf.keras.Sequential([
 IMG_SHAPE = IMG_SIZE + (3,)
 base_model = BACKBONE(input_shape=IMG_SHAPE, include_top=False, weights='imagenet')
 
-inputs = tf.keras.Input(shape=(160, 160, 3))
+inputs = tf.keras.Input(shape=IMG_SHAPE)
 x = data_augmentation(inputs)
 x = PREPROCESS_INPUT(x)
 x = base_model(x, training=False)
