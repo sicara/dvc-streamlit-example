@@ -64,8 +64,11 @@ To go further, see the [dvc CLI reference](https://dvc.org/doc/command-reference
 
 ## Streamlit Dashboard
 
-[TODO]
+Launch the Streamlit app: `streamlit run st_scripts/st_dashboard.py`
 
+Open you browser, you should see the Streamlit app :
+
+![Streamlit App](./docs/images/streamlit-inference.png)
 
 ## Run with docker
 
