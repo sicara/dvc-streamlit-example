@@ -44,7 +44,7 @@ def st_inference():
         for model_rev in selected_models
     }
 
-    uploaded_file = st.file_uploader("2. Upload an image")
+    uploaded_file = st.file_uploader("Upload an image")
 
     if uploaded_file:
         image = Image.open(uploaded_file)

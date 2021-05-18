@@ -2,10 +2,13 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Union, Optional
 import os
+import json
 
 import git
 import streamlit as st
 import yaml
+
+from scripts.params import EVALUATION_DIR
 
 
 ROOT_DIR = Path(os.path.dirname(os.path.realpath(__file__))).parent
@@ -24,6 +27,13 @@ def git_open(path: Union[str, Path], rev: str):
     yield diff.a_blob.data_stream
 
 
+#%% Retrive commits for trained model
+MODELS_COMMITS = list(REPO.iter_commits(
+    rev=f"...{FIRST_PIPELINE_COMMIT}",
+    paths="dvc.lock",
+))
+
+
 #%% Utils for model parameters
 def _read_train_params(rev: str) -> dict:
     with git_open(ROOT_DIR / "dvc.lock", rev=rev) as file:
@@ -33,13 +43,23 @@ def _read_train_params(rev: str) -> dict:
 
 MODELS_PARAMETERS = {
     commit.hexsha: _read_train_params(rev=commit.hexsha)
-    for commit in REPO.iter_commits(
-        rev=f"...{FIRST_PIPELINE_COMMIT}",
-        paths="dvc.lock",
-    )
+    for commit in MODELS_COMMITS
 }
 
 
+#%%
+def _read_model_evaluation_metrics(model_rev: str) -> dict:
+    with git_open(EVALUATION_DIR / "metrics.json", rev=model_rev) as file:
+        return json.load(file)
+
+
+MODELS_EVALUATION_METRICS = {
+    commit.hexsha: _read_model_evaluation_metrics(model_rev=commit.hexsha)
+    for commit in MODELS_COMMITS
+}
+
+
+#%%
 def get_model_backbone(model_rev: str) -> Optional[str]:
     model_parameters = MODELS_PARAMETERS[model_rev]
     try:
@@ -52,12 +72,20 @@ def _display_model(hexsha: str) -> str:
     commit = REPO.commit(hexsha)
     backbone = get_model_backbone(hexsha) or "-"
 
-    return f"{commit.message} / {backbone} / {commit.committed_datetime} / {hexsha}"
+    return f"{commit.message} / {backbone} / {commit.committed_datetime}"
 
 
 def st_model_multiselect():
-    return st.multiselect(
-        "1. Choose your model(s)",
-        list(MODELS_PARAMETERS),
+    return st.sidebar.multiselect(
+        "Choose your model(s)",
+        [commit.hexsha for commit in MODELS_COMMITS],
+        format_func=_display_model,
+    )
+
+
+def st_model_selectbox():
+    return st.sidebar.selectbox(
+        "Choose your model",
+        [commit.hexsha for commit in MODELS_COMMITS],
         format_func=_display_model,
     )
