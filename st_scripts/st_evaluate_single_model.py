@@ -49,3 +49,41 @@ def st_evaluate_single_model():
     st.write("Accuracy (%):", round(100 * accuracy, 2))
 
     st.vega_lite_chart(predictions, VEGA_CONFUSION_MATRIX["spec"])
+
+    st.markdown("## Images")
+
+    images_selector_columns = st.beta_columns(5)
+    with images_selector_columns[2]:
+        st.write("True label")
+        st.write("Predicted label")
+    with images_selector_columns[3]:
+        show_true_cats_images = st.checkbox(label="cats", key="true_cats_images", value=False)
+        show_predicted_cats_images = st.checkbox(label="cats", key="predicted_cats_images", value=True)
+    with images_selector_columns[4]:
+        show_true_dogs_images = st.checkbox(label="dogs", key="true_dogs_images", value=True)
+        show_predicted_dogs_images = st.checkbox(label="dogs", key="predicted_cats_images", value=False)
+
+    selected_true_labels = []
+    if show_true_cats_images: selected_true_labels.append("cats")
+    if show_true_dogs_images: selected_true_labels.append("dogs")
+
+    selected_predicted_labels = []
+    if show_predicted_cats_images: selected_predicted_labels.append("cats")
+    if show_predicted_dogs_images: selected_predicted_labels.append("dogs")
+
+    selected_predictions = predictions.loc[
+        lambda df: df.true_label.isin(selected_true_labels)
+    ].loc[
+        lambda df: df.predicted_label.isin(selected_predicted_labels)
+    ]
+
+    with images_selector_columns[0]:
+        st.write("Selected images:", len(selected_predictions))
+
+    images_columns = st.beta_columns(4)
+
+    for idx, (_, row) in enumerate(selected_predictions.iterrows()):
+        images_columns[idx % 4].image(
+            row["image_path"],
+            caption=f"true={row['true_label']}, predicted={row['predicted_label']}, pred={row['prediction']:.3f}",
+        )
