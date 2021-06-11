@@ -1,9 +1,15 @@
+import json
+
 import dvc.api
 import pandas as pd
 import streamlit as st
 
 from scripts.params import EVALUATION_DIR
 from st_scripts.st_utils import st_model_selectbox, MODELS_PARAMETERS, REPO
+
+
+with open("./st_scripts/vega_graphs/confusion_matrix.json") as file:
+    VEGA_CONFUSION_MATRIX = json.load(file)
 
 
 @st.cache
@@ -41,3 +47,5 @@ def st_evaluate_single_model():
 
     accuracy = (predictions.true_label == predictions.predicted_label).mean()
     st.write("Accuracy (%):", round(100 * accuracy, 2))
+
+    st.vega_lite_chart(predictions, VEGA_CONFUSION_MATRIX["spec"])
