@@ -1,5 +1,5 @@
 # Original code from: https://www.tensorflow.org/tutorials/images/transfer_learning
-import dvclive
+from dvclive.keras import DvcLiveCallback
 import tensorflow as tf
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras.preprocessing import image_dataset_from_directory
@@ -54,19 +54,9 @@ outputs = tf.keras.layers.Dense(1)(x)
 
 model = tf.keras.Model(inputs, outputs)
 
-
-#%% Define dvclive callback
-# See https://dvc.org/doc/dvclive/dvclive-with-dvc
-class MetricsCallback(tf.keras.callbacks.Callback):
-    def on_epoch_end(self, epoch: int, logs: dict = None):
-        logs = logs or {}
-        for metric, value in logs.items():
-            dvclive.log(metric, value)
-        dvclive.next_step()
-
-
 callbacks = [
-    MetricsCallback(),
+    # Use dvclive's Keras callback
+    DvcLiveCallback(),
     ModelCheckpoint(str(TRAIN_DIR / "best_weights.h5"), save_best_only=True),
 ]
 
