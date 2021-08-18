@@ -1,4 +1,5 @@
 [core]
     remote = origin
 ['remote "origin"']
-    url = https://public-sicara.s3.amazonaws.com/dvc-remotes/dvc-streamlit-example
+    url = s3://public-sicara/dvc-remotes/dvc-streamlit-example
+    profile = leto
