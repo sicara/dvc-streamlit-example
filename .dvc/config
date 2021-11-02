@@ -1,4 +1,6 @@
 [core]
-    remote = origin
+    remote = gdrive
 ['remote "origin"']
     url = https://public-sicara.s3.amazonaws.com/dvc-remotes/dvc-streamlit-example
+['remote "gdrive"']
+    url = gdrive://1aKxdyMja5bVKs18xtr4ZgDr0SpfLLMo0
