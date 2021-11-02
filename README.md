@@ -60,21 +60,3 @@ To go further, see the [dvc CLI reference](https://dvc.org/doc/command-reference
 > By default, you have permission to read (`dvc pull`) but you cannot write (`dvc push`).
 > If you want to run experiments and save your result with `dvc push`,
 > consider adding [your own dvc remote](https://dvc.org/doc/command-reference/remote/add).
-
-
-## Streamlit Dashboard
-
-Launch the Streamlit app: `streamlit run st_scripts/st_dashboard.py`
-
-Open you browser, you should see the Streamlit app :
-
-![Streamlit App](./docs/images/streamlit-inference.png)
-
-## Run with docker
-
-1. Build the docker image: `docker build -t dvc-streamlit-example .`
-2. Run the docker: `docker run --gpus all --rm -v $PWD:/tmp --shm-size=1g dvc-streamlit-example ${CMD}`.
-   For instance, to relaunch the training pipeline:
-   ```
-   docker run --gpus all --rm -v $PWD:/tmp --shm-size=1g dvc-streamlit-example dvc repro
-   ```
