@@ -58,8 +58,8 @@ stages:
       size: 16126886
       nfiles: 695
     - path: scripts/train.py
-      md5: a6edfb77adf3b631391890188d246d2c
-      size: 3264
+      md5: 39a6f9242a0e00193e893e26a0e2cd55
+      size: 2993
     params:
       params.yaml:
         model:
@@ -78,19 +78,19 @@ stages:
           fine_tune_at: 100
     outs:
     - path: ./data/train/best_weights.h5
-      md5: d8adc1a3678ae740ac214f352d48a05e
+      md5: 07512cc95ec05e9cb12b94b6f718f278
       size: 172679472
     - path: ./data/train/model
-      md5: f620686421a581af909b576489fe2abb.dir
-      size: 177275013
+      md5: 8bde0c2b64bbd6dab1c5f10ffb6909cd.dir
+      size: 177268180
       nfiles: 3
     - path: ./data/train/training_metrics
-      md5: d74d74a16fe3c4a5424441503827213e.dir
-      size: 3810
+      md5: a3f41d41bef90a6764346198d8090843.dir
+      size: 3800
       nfiles: 4
     - path: logs/train.out
-      md5: 37770d8d49a959d4343bbf82906848da
-      size: 276679
+      md5: f9eb235c68cf6c01c4c300ae32cca0ce
+      size: 276673
   evaluate:
     cmd: python scripts/evaluate.py &> logs/evaluate.out
     deps:
@@ -99,8 +99,8 @@ stages:
       size: 6815914
       nfiles: 305
     - path: ./data/train/model
-      md5: f620686421a581af909b576489fe2abb.dir
-      size: 177275013
+      md5: 8bde0c2b64bbd6dab1c5f10ffb6909cd.dir
+      size: 177268180
       nfiles: 3
     - path: scripts/evaluate.py
       md5: aada14c8861cb28746abb5aa78e9c4c3
@@ -110,8 +110,8 @@ stages:
       md5: 5ba98eca1d691aa800be75ffd1aa7ea0
       size: 55
     - path: ./data/evaluation/predictions.csv
-      md5: e140a05dde76c4c47af03c63103762b5
-      size: 21512
+      md5: 647eda4ac3f3c93eede738d95f03212e
+      size: 21261
     - path: logs/evaluate.out
-      md5: ec5490a55b5a6b528dccfbd1b2eb81f4
+      md5: 725d714bbcd0ee3fc44d411dfab45fd2
       size: 4839
