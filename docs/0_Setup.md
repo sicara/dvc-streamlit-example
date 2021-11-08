@@ -21,3 +21,6 @@ pip install -r requirements.txt
 Check `dvc` is installed by running `dvc version` in your terminal. You should see:
 
 ![Dvc version](./images/dvc-version.png)
+
+---
+Next: [:one: DVC Basics](./1_Basics.md)
