@@ -1,6 +1,4 @@
 dvc[gdrive]==2.8.2
-dvclive==0.4.2
 numpy==1.19.5
 pandas==1.3.4
-tensorflow==2.4.1
 tqdm==4.62.3
