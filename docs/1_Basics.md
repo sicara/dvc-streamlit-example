@@ -89,6 +89,18 @@ If you look at `20756b033f98bc1767c575a0e8e15417.dir` in the cache:
 ]
 ```
 
+### The `.dvcignore` file
+
+There are files you'll never want to be tracked e.g., `.DS_Store` files (MacOs).
+```bash
+touch huge_dir/.DS_Store  # Some file you do not want to track
+dvc status huge_dir
+```
+![DVC status](./images/dvc-status.png)
+
+The `.dvcignore` file is like `.gitignore`: just add `.DS_Store` in it does the trick.
+
+
 # 3. The Remote Storage
 
 - the [DVC config file](../.dvc/config)
