@@ -1,12 +1,19 @@
 stages:
   generate_huge_csv_file:
     cmd: python generate_huge_csv_file.py
+    params:
+    - huge_file_name
+    - your_name
+    - n_data
     deps:
     - generate_huge_csv_file.py
     outs:
     - huge_csv_file.csv
   compute_metrics:
     cmd: python compute_metrics.py
+    params:
+    - huge_file_name
+    - metrics_file_name
     deps:
     - compute_metrics.py
     - huge_csv_file.csv

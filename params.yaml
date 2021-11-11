@@ -1,0 +1,4 @@
+huge_file_name: huge_csv_file.csv
+metrics_file_name: metrics.json
+your_name: antoinet
+n_data: 1000000

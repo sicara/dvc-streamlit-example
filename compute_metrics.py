@@ -2,8 +2,7 @@ import json
 import pandas as pd
 
 # 1. Inputs
-HUGE_FILE_NAME = "huge_csv_file.csv"
-METRICS_FILE_NAME = "metrics.json"
+from params import HUGE_FILE_NAME, METRICS_FILE_NAME
 
 # 2. Open input files
 data_df = pd.read_csv(HUGE_FILE_NAME)
