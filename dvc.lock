@@ -4,8 +4,13 @@ stages:
     cmd: python generate_huge_csv_file.py
     deps:
     - path: generate_huge_csv_file.py
-      md5: 0dc22d0c550267df88a47de808f245e7
-      size: 414
+      md5: da39e967cfc74abc214c819cd51c7847
+      size: 368
+    params:
+      params.yaml:
+        huge_file_name: huge_csv_file.csv
+        n_data: 1000000
+        your_name: antoinet
     outs:
     - path: huge_csv_file.csv
       md5: 0bcf5f24c56ecc32d5b2687a72922c8e
@@ -14,11 +19,15 @@ stages:
     cmd: python compute_metrics.py
     deps:
     - path: compute_metrics.py
-      md5: 636997557fe3de95eae76df8a3168f5d
-      size: 377
+      md5: 230dac71d564fa23b861cbd9a56fcc7b
+      size: 358
     - path: huge_csv_file.csv
       md5: 0bcf5f24c56ecc32d5b2687a72922c8e
       size: 33046249
+    params:
+      params.yaml:
+        huge_file_name: huge_csv_file.csv
+        metrics_file_name: metrics.json
     outs:
     - path: metrics.json
       md5: 8f9caa2e35fd14a21a7e6e29b0ffd02b
