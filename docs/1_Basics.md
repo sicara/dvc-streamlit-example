@@ -9,7 +9,8 @@
 
 ![DVC Principle](./images/dvc-principle.png)
 
-Let's try it:
+Let's try it !
+Execute the following python code:
 
 ```python
 import pandas as pd
@@ -18,34 +19,44 @@ import numpy as np
 N = int(1e6)
 
 pd.DataFrame({"col_a": range(N), "col_b": np.random.random(N)}).to_csv(
-    "huge_csv_file.csv"
+    "big_csv_file.csv"
 )
 ```
 
-File `huge_csv_file.csv` is about ~30MB. Let's add it with dvc:
+File `big_csv_file.csv` is about ~30MB. Let's add it with dvc:
 ```bash
-dvc add huge_csv_file.csv
+dvc add big_csv_file.csv
 ```
 ![dvc add](./images/dvc-add.png)
 
 It creates two files:
-1. `.gitignored` so that `huge_csv_file.csv` is not tracked with Git;
-2. `huge_csv_file.csv.dvc`: dvc metafile containing a reference to the file -> this one should be tracked with Git (`git add`).
+1. `.gitignored` so that `big_csv_file.csv` is not tracked with Git;
+2. `big_csv_file.csv.dvc`: dvc metafile containing a reference to the file -> this one should be tracked with Git (`git add`).
 
-If you `cat huge_csv_file.csv.dvc`:
+If you `cat big_csv_file.csv.dvc`:
 ```yaml
 outs:
 - md5: 15c5bb5aecb5fb33e43291322514d1da  # Hash should be different
   size: 33047824
-  path: huge_csv_file.csv
+  path: big_csv_file.csv
 ```
 
-You can check the hash `md5sum huge_csv_file.csv` (or `md5` on MacOS).
+You can check the hash `md5sum big_csv_file.csv` (or `md5` on MacOS).
+
+Track the data:
+```bash
+git add big_csv_file.csv.dvc .gitignore
+git commit -m "Track big_csv_file.csv with DVC"
+```
+
+Useful commands:
+- `dvc status big_csv_file.csv`: to check if the file `big_csv_file.csv` if up-to-date with the metafile `big_csv_file.csv.dvc`
+- `dvc commit big_csv_file.csv`: to update the metafile (try it by modifying the csv file)
 
 # 2. The Local Cache Directory
 
-What if we "lose" the CSV file? `rm huge_csv_file.csv`
-- recover the file: `dvc checkout huge_csv_file.csv.dvc`
+What if we "lose" the CSV file? `rm big_csv_file.csv`
+- recover the file: `dvc checkout big_csv_file.csv.dvc`
 
 ![dvc checkout](./images/dvc-checkout.png)
 
@@ -55,24 +66,28 @@ What's happening under the hood:
 "The DVC cache is a content-addressable storage": it means that even if files have different names with same content, it gets cached **only once**.
 
 ```bash
-cp huge_csv_file.csv huge_csv_file_bis.csv
-dvc add huge_csv_file_bis.csv
+cp big_csv_file.csv big_csv_file_bis.csv
+dvc add big_csv_file_bis.csv
+git add big_csv_file_bis.csv.dvc .gitignore
+git commit -m "Track another file with DVC"
 ```
 
 It works with directories!
 ```bash
-mkdir huge_dir
-mv huge_csv_file*.csv huge_dir
-dvc add huge_dir
+mkdir big_dir
+mv big_csv_file*.csv big_dir
+dvc add big_dir
+git add big_dir.dvc .gitignore
+git commit -m "Track a directory with DVC"
 ```
 
-If you `cat huge_dir.dvc`:
+If you `cat big_dir.dvc`:
 ```yaml
 outs:
 - md5: 20756b033f98bc1767c575a0e8e15417.dir  # Hash should be different
   size: 66095648
   nfiles: 2
-  path: huge_dir
+  path: big_dir
 ```
 
 If you look at `20756b033f98bc1767c575a0e8e15417.dir` in the cache:
@@ -80,11 +95,11 @@ If you look at `20756b033f98bc1767c575a0e8e15417.dir` in the cache:
 [
   {
     "md5": "15c5bb5aecb5fb33e43291322514d1da",
-    "relpath": "huge_csv_file.csv"
+    "relpath": "big_csv_file.csv"
   },
   {
     "md5": "15c5bb5aecb5fb33e43291322514d1da",
-    "relpath": "huge_csv_file_bis.csv"
+    "relpath": "big_csv_file_bis.csv"
   }
 ]
 ```
@@ -93,8 +108,8 @@ If you look at `20756b033f98bc1767c575a0e8e15417.dir` in the cache:
 
 There are files you'll never want to be tracked e.g., `.DS_Store` files (MacOs).
 ```bash
-touch huge_dir/.DS_Store  # Some file you do not want to track
-dvc status huge_dir
+touch big_dir/.DS_Store  # Some file you do not want to track
+dvc status big_dir
 ```
 ![DVC status](./images/dvc-status.png)
 
