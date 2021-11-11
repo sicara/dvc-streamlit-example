@@ -1,0 +1,7 @@
+stages:
+  generate_huge_csv_file:
+    cmd: python generate_huge_csv_file.py
+    deps:
+    - generate_huge_csv_file.py
+    outs:
+    - huge_csv_file.csv

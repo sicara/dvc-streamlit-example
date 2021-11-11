@@ -1,0 +1,12 @@
+schema: '2.0'
+stages:
+  generate_huge_csv_file:
+    cmd: python generate_huge_csv_file.py
+    deps:
+    - path: generate_huge_csv_file.py
+      md5: 0dc22d0c550267df88a47de808f245e7
+      size: 414
+    outs:
+    - path: huge_csv_file.csv
+      md5: 0bcf5f24c56ecc32d5b2687a72922c8e
+      size: 33046249
