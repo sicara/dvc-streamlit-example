@@ -17,5 +17,5 @@ stages:
     deps:
     - compute_metrics.py
     - huge_csv_file.csv
-    outs:
+    metrics:
     - metrics.json
