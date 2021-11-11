@@ -5,3 +5,10 @@ stages:
     - generate_huge_csv_file.py
     outs:
     - huge_csv_file.csv
+  compute_metrics:
+    cmd: python compute_metrics.py
+    deps:
+    - compute_metrics.py
+    - huge_csv_file.csv
+    outs:
+    - metrics.json

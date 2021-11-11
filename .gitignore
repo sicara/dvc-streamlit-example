@@ -3,3 +3,4 @@
 **/__pycache__/
 .model_cache
 /huge_csv_file.csv
+/metrics.json

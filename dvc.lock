@@ -10,3 +10,16 @@ stages:
     - path: huge_csv_file.csv
       md5: 0bcf5f24c56ecc32d5b2687a72922c8e
       size: 33046249
+  compute_metrics:
+    cmd: python compute_metrics.py
+    deps:
+    - path: compute_metrics.py
+      md5: 636997557fe3de95eae76df8a3168f5d
+      size: 377
+    - path: huge_csv_file.csv
+      md5: 0bcf5f24c56ecc32d5b2687a72922c8e
+      size: 33046249
+    outs:
+    - path: metrics.json
+      md5: 8f9caa2e35fd14a21a7e6e29b0ffd02b
+      size: 32
