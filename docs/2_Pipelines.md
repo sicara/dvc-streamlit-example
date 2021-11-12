@@ -241,6 +241,7 @@ stages:
 ![dvc-run-cache](./images/dvc-repro-run-cache.png)
 
 - dvc "runs" are stored in `.dvc/cache/runs/`
+- see :link: [DVC run-cache documentation](https://dvc.org/doc/user-guide/project-structure/internal-files#run-cache)
 - to avoid using cache: `dvc repro --no-run-cache`
 
 ---
