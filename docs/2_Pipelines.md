@@ -23,13 +23,13 @@ import numpy as np
 
 # 1. Inputs
 YOUR_NAME = "antoinet"  # Should be unique in the audience
-N = int(1e6)
+N_DATA = int(1e6)
 HUGE_FILE_NAME = "huge_csv_file.csv"
 
 # 2. Generate the file
 seed = int(hashlib.md5(YOUR_NAME.encode()).hexdigest(), 16) % 2**32
 np.random.seed(seed)
-data_df = pd.DataFrame({"col_a": range(N), "col_b": np.random.random(N)})
+data_df = pd.DataFrame({"col_a": range(N_DATA), "col_b": np.random.random(N_DATA)})
 
 # 3. Write result
 data_df.to_csv(HUGE_FILE_NAME)
@@ -37,6 +37,7 @@ data_df.to_csv(HUGE_FILE_NAME)
 
 - try the script: `python generate_huge_csv_file.py`
 - check the reproducibility: execute several times and `md5sum huge_csv_file.csv`
+- `git add` / `git commit` the script
 
 Now, let's execute the script with DVC !
 - `dvc run --help`
@@ -47,6 +48,17 @@ dvc run \
 --deps generate_huge_csv_file.py \
 --outs huge_csv_file.csv \
 python generate_huge_csv_file.py
+```
+
+It does:
+- create `dvc.yaml`: description of the pipeline
+- create `dvc.lock`: metafile for the deps and outs of the pipeline
+- update `.gitignore`: add outs file to avoid them being tracked with git
+
+Save the pipeline execution:
+```
+git add dvc.yaml dvc.lock .gitignore
+git commit -m "Add my first pipeline"
 ```
 
 ### 1.2 Compute metrics
@@ -73,6 +85,7 @@ with open(METRICS_FILE_NAME, "w") as metrics_file:
 ```
 
 - try the script: `python compute_metrics.py`
+- `git add` / `git commit` the script
 - add the new stage to the DVC pipeline:
 ```bash
 dvc run \
@@ -82,7 +95,18 @@ dvc run \
 --outs metrics.json \
 python compute_metrics.py
 ```
+Save the new stage:
+```
+git add dvc.yaml dvc.lock .gitignore
+git commit -m "Add compute_metrics stage to the pipeline"
+```
+
+### 1.3 Re-execute the pipeline
+
 - reproduce the pipeline: `dvc repro`
+- force reproduce the pipeline: `dvc repro --force`
+- execute a stage: `dvc repro dvc.yaml:compute_metrics`
+- execute a single stage: `dvc repro --single-item dvc.yaml:compute_metrics`
 
 
 # 2. Improve the pipeline !
@@ -148,7 +172,10 @@ with open(METRICS_FILE_NAME, "w") as metrics_file:
     json.dump({"metrics": huge_metrics}, metrics_file)
 ```
 
-Then, we need to modify the `dvc.yaml` file to declare params:
+Then, we need to modify the `dvc.yaml` file:
+- to declare params: add `params` key to the stages. When a parameter changes, it triggers the execution of the stage like a regular `deps`;
+- to "parametrize" `outs` filenames: the single source of truth is the `params.yaml` file.
+
 ```yaml
 stages:
   generate_huge_csv_file:
@@ -160,7 +187,7 @@ stages:
     deps:
     - generate_huge_csv_file.py
     outs:
-    - huge_csv_file.csv
+    - ${huge_file_name}
   compute_metrics:
     cmd: python compute_metrics.py
     params:
@@ -168,12 +195,17 @@ stages:
     - metrics_file_name
     deps:
     - compute_metrics.py
-    - huge_csv_file.csv
+    - ${huge_file_name}
     outs:
-    - metrics.json
+    - ${metrics_file_name}
 ```
 
-- run `dvc repro`
+- save the changes
+```bash
+git add params.yaml params.py dvc.yaml *.py
+git commit -m "Add parameters to the pipeline"
+```
+- run `dvc repro` then `git add` / `git commit`
 - see parameter values: `dvc params diff`
 - try to change parameters value and relaunch pipeline
 
@@ -192,11 +224,12 @@ stages:
     - metrics_file_name
     deps:
     - compute_metrics.py
-    - huge_csv_file.csv
+    - ${huge_file_name}
     metrics:
-    - metrics.json
+    - ${metrics_file_name}
 ```
 
+- save the change: `git add` / `git commit`
 - Show metrics: `dvc metrics show`
 - Diff metrics: `dvc metrics diff`
 
