@@ -52,7 +52,7 @@ def st_evaluate_single_model():
 
     st.markdown("## Images")
 
-    images_selector_columns = st.beta_columns(5)
+    images_selector_columns = st.columns(5)
     with images_selector_columns[2]:
         st.write("True label")
         st.write("Predicted label")
@@ -80,7 +80,7 @@ def st_evaluate_single_model():
     with images_selector_columns[0]:
         st.write("Selected images:", len(selected_predictions))
 
-    images_columns = st.beta_columns(4)
+    images_columns = st.columns(4)
 
     for idx, (_, row) in enumerate(selected_predictions.iterrows()):
         images_columns[idx % 4].image(
