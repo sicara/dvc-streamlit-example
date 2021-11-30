@@ -19,14 +19,13 @@ predictions and compare trained models.
 
 ### Requirements
 
-- python > 3
+- python >= 3.7.1,< 3.10
 - For GPU support for Tensorflow 2.4.x: Nvidia drivers > 450 and Cuda >= 11
 
 ### Install dependencies
 
-1. [Optional] Create and activate a virtual env with your favorite tool
-   (e.g., virtualenv, conda, pyenv).
-2. Install dependencies with pip: `pip install -r requirements.txt`
+1. [Optional] [Install poetry](https://python-poetry.org/docs/#installation) if you don't have it already.
+2. Install dependencies: `poetry install`
 
 ## DVC Commands
 
