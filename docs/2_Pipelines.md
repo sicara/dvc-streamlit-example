@@ -35,7 +35,7 @@ np.random.seed(seed)
 data_df = pd.DataFrame({"col_a": range(N_DATA), "col_b": np.random.random(N_DATA)})
 
 # 3. Write result
-data_df.to_csv(HUGE_FILE_NAME)
+data_df.to_csv(HUGE_FILE_NAME, index=False)
 ```
 
 - try the script: `python generate_huge_csv_file.py`
@@ -156,7 +156,7 @@ np.random.seed(seed)
 data_df = pd.DataFrame({"col_a": range(N_DATA), "col_b": np.random.random(N_DATA)})
 
 # 3. Write result
-data_df.to_csv(HUGE_FILE_NAME)
+data_df.to_csv(HUGE_FILE_NAME, index=False)
 ```
 - `compute_metrics.py`:
 ```python
@@ -237,6 +237,25 @@ stages:
 - save the change: `git add` / `git commit`
 - Show metrics: `dvc metrics show`
 - Diff metrics: `dvc metrics diff`
+
+### 2.3 Plots !
+
+- :link: [DVC plots](https://dvc.org/doc/command-reference/plots)
+
+DVC has two concepts for metrics, that represent different results of machine learning training or data processing:
+- dvc metrics represent **scalar numbers** such as AUC, true positive rate, etc.
+- dvc plots can be used to visualize **data series** such as AUC curves, loss functions, confusion matrices, etc.
+
+Plots the huge file:
+```
+dvc plots show -x col_a -y col_b huge_csv_file.csv
+```
+Compare plots:
+```
+dvc plots diff -t smooth -x col_a -y col_b --targets huge_csv_file.csv -- HEAD^
+```
+
+File `huge_csv_file.csv` is probably too big: reduce the `n_data` parameter !
 
 # 3. DVC pipeline under the hood
 
