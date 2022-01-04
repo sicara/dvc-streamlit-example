@@ -64,6 +64,8 @@ git add dvc.yaml dvc.lock .gitignore
 git commit -m "Add my first pipeline"
 ```
 
+> :bulb: Bonus: enable auto staging with `dvc config core.autostage true`
+
 ### 1.2 Compute metrics
 
 Create a `compute_metrics.py` script:
