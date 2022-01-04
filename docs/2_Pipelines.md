@@ -1,7 +1,10 @@
 2 - Pipelines
 ===
 
-- :link: [Data Pipelines](https://dvc.org/doc/start/data-pipelines)
+# 0. Prerequisites
+
+- [:zero: Setup your machine](./0_Setup.md)
+- Read the [:link: Data Pipelines](https://dvc.org/doc/start/data-pipelines) documentation
 
 # 1. A simple pipeline
 
