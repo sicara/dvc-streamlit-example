@@ -34,7 +34,7 @@ MODELS_DF = (
 def st_list_model():
     st.markdown("### Models list")
 
-    columns_checkboxes_beta_columns = st.beta_columns(5)
+    columns_checkboxes_beta_columns = st.columns(5)
 
     columns_checkboxes_beta_columns[0].text("Show columns for")
     show_commit_columns = columns_checkboxes_beta_columns[1].checkbox("commits", value=True)

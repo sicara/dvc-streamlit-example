@@ -51,7 +51,7 @@ def st_inference():
         image_name = uploaded_file.name
         resized_image = image.resize(IMG_SIZE)
 
-        beta_column_0, beta_column_1, beta_column_2 = st.beta_columns(3)
+        beta_column_0, beta_column_1, beta_column_2 = st.columns(3)
 
         with beta_column_0:
             st.write(f"Image name: {image_name}")

@@ -27,7 +27,7 @@ def git_open(path: Union[str, Path], rev: str):
     yield diff.a_blob.data_stream
 
 
-#%% Retrive commits for trained model
+#%% Retrieve commits for trained model
 MODELS_COMMITS = list(REPO.iter_commits(
     rev=f"...{FIRST_PIPELINE_COMMIT}",
     paths="dvc.lock",
