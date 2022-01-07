@@ -24,7 +24,7 @@ predictions and compare trained models.
 
 ### Install dependencies
 
-1. [Optional] [Install poetry](https://python-poetry.org/docs/#installation) if you don't have it already.
+1. [Optional] [Install poetry](https://python-poetry.org/docs/master/#installing-with-the-official-installer) if you don't have it already.
 2. Install dependencies: `poetry install`
 
 ## DVC Commands
