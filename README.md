@@ -63,7 +63,7 @@ To go further, see the [dvc CLI reference](https://dvc.org/doc/command-reference
 
 ## Streamlit Dashboard
 
-Launch the Streamlit app: `streamlit run st_scripts/st_dashboard.py`
+Launch the Streamlit app: `PYTHONPATH=. streamlit run st_scripts/st_dashboard.py`
 
 Open you browser, you should see the Streamlit app :
 
